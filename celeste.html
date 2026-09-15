@@ -368,12 +368,12 @@
 		else
 			p8_playarea.style.marginTop = "";
 
-		canvas.style.width = csize;
-		canvas.style.height = csize;
+		canvas.style.width = csize + "px";
+		canvas.style.height = csize + "px";
 
 		// to do: this should just happen from css layout
-		canvas.style.marginLeft = margin_left;
-		canvas.style.marginTop = margin_top;
+		canvas.style.marginLeft = margin_left + "px";
+		canvas.style.marginTop = margin_top + "px";
 
 		p8_container.style.width = csize;
 		p8_container.style.height = csize;
@@ -497,6 +497,25 @@
 	var p8_is_running = false;
 	var p8_script = null;
 	var Module = null;
+	function p8_show_error(message)
+	{
+		var error = document.getElementById("p8_error");
+		if (!error)
+		{
+			error = document.createElement("pre");
+			error.id = "p8_error";
+			error.style.cssText = "position:fixed; z-index:100; left:8px; right:8px; bottom:8px; margin:0; padding:8px; background:#400; color:#fff; white-space:pre-wrap; font:12px monospace;";
+			document.body.appendChild(error);
+		}
+		error.textContent = "PICO-8 error: " + message;
+	}
+
+	window.addEventListener("error", function(event)
+	{
+		if (event && event.error) p8_show_error(event.error.message || event.error);
+		else if (event) p8_show_error(event.message || "Unknown runtime error");
+	});
+
 	function p8_run_cart()
 	{
 		if (p8_is_running) return;
@@ -545,6 +564,9 @@
 				p8_buttons_hash = -33;
 
 
+		e.onerror = function(){
+			p8_show_error("Could not load celeste.js");
+		}
 		}
 		e.type = "application/javascript";
 		e.src = "celeste.js";
@@ -701,7 +723,7 @@ canvas{
 .p8_start_button{
 	cursor:pointer;
 	background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAADiUlEQVR4Ae2dv47UMBCH15ZbaO54ghU6rU7aq9E1XEtx1elaJ9oX2AKtkE7alZBoqHgE6Kmp6ehpqHgE3gGkSCEkdtYbLp7Y+X4aRV7vxEnmmz+tUtoskJw0IQAAABAAAIAAAICRVFhLoL1S2szBDm9eT/TdlDZkITNgvj2NCqACAIAAAAAEAACgIdrvtvvdFgCpSiltiAItCAAoGwCFtYSVGUALQgAAAEoKwH63ZQgjWlBcFdZSAVRALtnEDEDMAACgJAHsd9uZDh6lTbpWlpv6mqglDODm+rZFIhzbdJilCqAZ/crO7w8AEIv+SQDiN8msAPgC3dxPaCokBsCZ+y0GVfT7PQHwmLnvI5QEg9wAJGdmEVeFtc2fHz996m629qv12d3Dr8/vnIfUPsPOd54TTVow+s4d534z+j3+g88/uj+eYlfA0Wx1yhl9n393v1tPsln/j2L2u5vrW+dgrPa7/w7zb1nPab5zsh3Cvoj0B7q10+PvPOEogHkN4T9d7+WLV0f3v377MsDf5xn+Ps3nZjiEu5/n++BTQ1n5h59/anKMOAKUFigCJFMBgTq7e0j08EElIDqCunZ+f8jgEeE2IQDn94dooZkOg6kAiBwRAAiHAwB/7emzlSBycRLCAKS+v6JeXWUZSAIQyX3n0wUZzBdAyJuU5QYAub+M0maB5KRFnvrk7Pk0wxH/xaiAWVYAAsC8Aex3W0LPDKAFIQAAAAAIAABAAAAAAgAAPCqsJVIjSSltiAItKFTr1bK+dv9y7k++BLRJyK4uL+qrc6G0KctNQl+UGIBW0CtrAUjLMqyAfptafaQNoPVXknWgtElvcGUkTQgAAAAEAAAgABzTfrftdyisLawFwFh6+/5DfhWglDb0ASoAAGk2/Sx6kDaCdnV5UVnguufe+lr/1b3XuXYeHs2mBaAVxKab7/bmIuTa7x/f5FvQ9x8/6/V6tRx8ju/e9WpZP2K9Wv7PI/JsQb5MfPQKCPGMbybLwdbM+laJNKuh6yNQAErnySAVyc+AxWJRWNtt0PXPalGvfSnv8+85ZxLzQHYGhMyD8GFwaseX6vtNm0QFhPT0k/p+q5KcfX8S6T/bCug/jQpwZGudsK1R4awSn0+4Q7wCUNok0YVyVRozAAAIAABAAAAAig+gsJYwjSilzcytLDeSL6C0IQuZAQBAAAAAAgAAEAAAgAAAAASAeeg3GTR+Na9IP3oAAAAQdEVYdExvZGVQTkcAMjAxMTAyMjHjWbbBAAAAAElFTkSuQmCC");
-	-repeat center;
+	background-repeat: no-repeat;
 	-webkit-background-size:cover; -moz-background-size:cover; -o-background-size:cover; background-size:cover;
 }
 
