@@ -24,4 +24,4 @@ python3 -m http.server 8000
 In GitHub Codespaces, open the **Ports** panel, forward port `8000`, and use the forwarded URL when accessing the game outside the Codespace.
 
 
-https://github.com/AnalogueBloom/Cel
+https://analoguebloom.github.io/Cel/celeste.html
